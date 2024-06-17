@@ -1,4 +1,11 @@
-import { pgTable, serial, text, timestamp, integer } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  serial,
+  text,
+  timestamp,
+  integer,
+  boolean,
+} from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
@@ -28,5 +35,20 @@ export const proofDrops = pgTable("proof_drops", {
   slot: integer("slot"), // Storage slot to base proof on
   origin_chain_id: integer("origin_chain_id"), // Ethereum
   destination_chain_id: text("destination_chain_id"), // SN_SEPOLIA
+  created_at: timestamp("created_at").defaultNow(),
+});
+
+// collections verified
+
+export const erc721Collection = pgTable("erc_721_collection", {
+  id: serial("id").primaryKey(),
+  name: text("name"),
+  contract_address: text("contract_address"),
+  block_number: integer("block_number"),
+  slot: integer("slot"), // Storage slot to base proof on
+  number_tokens: integer("number_tokens"),
+  owner_id: integer("owner_id").references(() => users.id),
+  chain_id: integer("chain_id"), // Ethereum
+  verified: boolean("verified"),
   created_at: timestamp("created_at").defaultNow(),
 });
