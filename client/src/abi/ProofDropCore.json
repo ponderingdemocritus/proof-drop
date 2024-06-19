@@ -1,0 +1,824 @@
+{
+  "abi": [
+    {
+      "type": "function",
+      "name": "addressRegistry",
+      "inputs": [{ "name": "", "type": "address", "internalType": "address" }],
+      "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getMyAddressRegistry",
+      "inputs": [],
+      "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getRegisteredStarknetAddress",
+      "inputs": [
+        { "name": "l1Address", "type": "address", "internalType": "address" }
+      ],
+      "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "register",
+      "inputs": [
+        {
+          "name": "starknetAddress",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "payable"
+    },
+    {
+      "type": "event",
+      "name": "AddressRegistration",
+      "inputs": [
+        {
+          "name": "l1Address",
+          "type": "address",
+          "indexed": false,
+          "internalType": "address"
+        },
+        {
+          "name": "starknetAddress",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    }
+  ],
+  "bytecode": {
+    "object": "0x608060405234801561001057600080fd5b506101bb806100206000396000f3fe60806040526004361061003f5760003560e01c80634174b9de14610044578063cef30c211461008c578063dd963440146100ae578063f207564e146100db575b600080fd5b34801561005057600080fd5b5061007a61005f36600461013c565b6001600160a01b031660009081526020819052604090205490565b60405190815260200160405180910390f35b34801561009857600080fd5b503360009081526020819052604090205461007a565b3480156100ba57600080fd5b5061007a6100c936600461013c565b60006020819052908152604090205481565b6100ee6100e936600461016c565b6100f0565b005b3360008181526020818152604091829020849055815192835282018390527f17e7d9394402e309c7ee7ba26b6d940a8b631911254187dd87a5380bc08d5a7c910160405180910390a150565b60006020828403121561014e57600080fd5b81356001600160a01b038116811461016557600080fd5b9392505050565b60006020828403121561017e57600080fd5b503591905056fea2646970667358221220c8b3b94b324e0b62b78a9471a53c631276d162492c325d3e0125c06fd87560c264736f6c63430008170033",
+    "sourceMap": "65:731:25:-:0;;;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x60806040526004361061003f5760003560e01c80634174b9de14610044578063cef30c211461008c578063dd963440146100ae578063f207564e146100db575b600080fd5b34801561005057600080fd5b5061007a61005f36600461013c565b6001600160a01b031660009081526020819052604090205490565b60405190815260200160405180910390f35b34801561009857600080fd5b503360009081526020819052604090205461007a565b3480156100ba57600080fd5b5061007a6100c936600461013c565b60006020819052908152604090205481565b6100ee6100e936600461016c565b6100f0565b005b3360008181526020818152604091829020849055815192835282018390527f17e7d9394402e309c7ee7ba26b6d940a8b631911254187dd87a5380bc08d5a7c910160405180910390a150565b60006020828403121561014e57600080fd5b81356001600160a01b038116811461016557600080fd5b9392505050565b60006020828403121561017e57600080fd5b503591905056fea2646970667358221220c8b3b94b324e0b62b78a9471a53c631276d162492c325d3e0125c06fd87560c264736f6c63430008170033",
+    "sourceMap": "65:731:25:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;641:153;;;;;;;;;;-1:-1:-1;641:153:25;;;;;:::i;:::-;-1:-1:-1;;;;;761:26:25;735:7;761:26;;;;;;;;;;;;641:153;;;;451:25:27;;;439:2;424:18;641:153:25;;;;;;;520:115;;;;;;;;;;-1:-1:-1;617:10:25;575:7;601:27;;;;;;;;;;;520:115;;94:50;;;;;;;;;;-1:-1:-1;94:50:25;;;;;:::i;:::-;;;;;;;;;;;;;;;227:287;;;;;;:::i;:::-;;:::i;:::-;;;368:10;352:15;:27;;;;;;;;;;;;:45;;;459:48;;846:51:27;;;913:18;;906:34;;;459:48:25;;819:18:27;459:48:25;;;;;;;227:287;:::o;14:286:27:-;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;168:23;;-1:-1:-1;;;;;220:31:27;;210:42;;200:70;;266:1;263;256:12;200:70;289:5;14:286;-1:-1:-1;;;14:286:27:o;487:180::-;546:6;599:2;587:9;578:7;574:23;570:32;567:52;;;615:1;612;605:12;567:52;-1:-1:-1;638:23:27;;487:180;-1:-1:-1;487:180:27:o",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "addressRegistry(address)": "dd963440",
+    "getMyAddressRegistry()": "cef30c21",
+    "getRegisteredStarknetAddress(address)": "4174b9de",
+    "register(uint256)": "f207564e"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.23+commit.f704f362\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"l1Address\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"starknetAddress\",\"type\":\"uint256\"}],\"name\":\"AddressRegistration\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"addressRegistry\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getMyAddressRegistry\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"l1Address\",\"type\":\"address\"}],\"name\":\"getRegisteredStarknetAddress\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"starknetAddress\",\"type\":\"uint256\"}],\"name\":\"register\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/ProofDropCore.sol\":\"ProofDropCore\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":forge-std/=lib/forge-std/src/\"]},\"sources\":{\"src/ProofDropCore.sol\":{\"keccak256\":\"0x542358674e887bafcebba57b1bd703299d5c3546077d28f7e2ad8037c5ffbf62\",\"license\":\"UNLICENSED\",\"urls\":[\"bzz-raw://57f08cede2c8cc074f6aca4b603700f5c7e2c343d3ee7432d6d2988a15047095\",\"dweb:/ipfs/QmSXGSdi147u9Qwu2L9qWNvUDMHWuY3zXFXPkfdLH4tLmf\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": { "version": "0.8.23+commit.f704f362" },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "l1Address",
+              "type": "address",
+              "indexed": false
+            },
+            {
+              "internalType": "uint256",
+              "name": "starknetAddress",
+              "type": "uint256",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "AddressRegistration",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            { "internalType": "address", "name": "", "type": "address" }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "addressRegistry",
+          "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getMyAddressRegistry",
+          "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "l1Address",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getRegisteredStarknetAddress",
+          "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "starknetAddress",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "payable",
+          "type": "function",
+          "name": "register"
+        }
+      ],
+      "devdoc": { "kind": "dev", "methods": {}, "version": 1 },
+      "userdoc": { "kind": "user", "methods": {}, "version": 1 }
+    },
+    "settings": {
+      "remappings": ["forge-std/=lib/forge-std/src/"],
+      "optimizer": { "enabled": true, "runs": 200 },
+      "metadata": { "bytecodeHash": "ipfs" },
+      "compilationTarget": { "src/ProofDropCore.sol": "ProofDropCore" },
+      "evmVersion": "paris",
+      "libraries": {}
+    },
+    "sources": {
+      "src/ProofDropCore.sol": {
+        "keccak256": "0x542358674e887bafcebba57b1bd703299d5c3546077d28f7e2ad8037c5ffbf62",
+        "urls": [
+          "bzz-raw://57f08cede2c8cc074f6aca4b603700f5c7e2c343d3ee7432d6d2988a15047095",
+          "dweb:/ipfs/QmSXGSdi147u9Qwu2L9qWNvUDMHWuY3zXFXPkfdLH4tLmf"
+        ],
+        "license": "UNLICENSED"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "src/ProofDropCore.sol",
+    "id": 46876,
+    "exportedSymbols": { "ProofDropCore": [46875] },
+    "nodeType": "SourceUnit",
+    "src": "39:758:25",
+    "nodes": [
+      {
+        "id": 46822,
+        "nodeType": "PragmaDirective",
+        "src": "39:24:25",
+        "nodes": [],
+        "literals": ["solidity", "^", "0.8", ".13"]
+      },
+      {
+        "id": 46875,
+        "nodeType": "ContractDefinition",
+        "src": "65:731:25",
+        "nodes": [
+          {
+            "id": 46826,
+            "nodeType": "VariableDeclaration",
+            "src": "94:50:25",
+            "nodes": [],
+            "constant": false,
+            "functionSelector": "dd963440",
+            "mutability": "mutable",
+            "name": "addressRegistry",
+            "nameLocation": "129:15:25",
+            "scope": 46875,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+              "typeString": "mapping(address => uint256)"
+            },
+            "typeName": {
+              "id": 46825,
+              "keyName": "",
+              "keyNameLocation": "-1:-1:-1",
+              "keyType": {
+                "id": 46823,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "102:7:25",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "94:27:25",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                "typeString": "mapping(address => uint256)"
+              },
+              "valueName": "",
+              "valueNameLocation": "-1:-1:-1",
+              "valueType": {
+                "id": 46824,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "113:7:25",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "id": 46832,
+            "nodeType": "EventDefinition",
+            "src": "151:70:25",
+            "nodes": [],
+            "anonymous": false,
+            "eventSelector": "17e7d9394402e309c7ee7ba26b6d940a8b631911254187dd87a5380bc08d5a7c",
+            "name": "AddressRegistration",
+            "nameLocation": "157:19:25",
+            "parameters": {
+              "id": 46831,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 46828,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "l1Address",
+                  "nameLocation": "185:9:25",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 46832,
+                  "src": "177:17:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 46827,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "177:7:25",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 46830,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "starknetAddress",
+                  "nameLocation": "204:15:25",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 46832,
+                  "src": "196:23:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 46829,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "196:7:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "176:44:25"
+            }
+          },
+          {
+            "id": 46851,
+            "nodeType": "FunctionDefinition",
+            "src": "227:287:25",
+            "nodes": [],
+            "body": {
+              "id": 46850,
+              "nodeType": "Block",
+              "src": "287:227:25",
+              "nodes": [],
+              "statements": [
+                {
+                  "expression": {
+                    "id": 46842,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "baseExpression": {
+                        "id": 46837,
+                        "name": "addressRegistry",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 46826,
+                        "src": "352:15:25",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                          "typeString": "mapping(address => uint256)"
+                        }
+                      },
+                      "id": 46840,
+                      "indexExpression": {
+                        "expression": {
+                          "id": 46838,
+                          "name": "msg",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": -15,
+                          "src": "368:3:25",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_magic_message",
+                            "typeString": "msg"
+                          }
+                        },
+                        "id": 46839,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberLocation": "372:6:25",
+                        "memberName": "sender",
+                        "nodeType": "MemberAccess",
+                        "src": "368:10:25",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "352:27:25",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 46841,
+                      "name": "starknetAddress",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 46834,
+                      "src": "382:15:25",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "352:45:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 46843,
+                  "nodeType": "ExpressionStatement",
+                  "src": "352:45:25"
+                },
+                {
+                  "eventCall": {
+                    "arguments": [
+                      {
+                        "expression": {
+                          "id": 46845,
+                          "name": "msg",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": -15,
+                          "src": "479:3:25",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_magic_message",
+                            "typeString": "msg"
+                          }
+                        },
+                        "id": 46846,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberLocation": "483:6:25",
+                        "memberName": "sender",
+                        "nodeType": "MemberAccess",
+                        "src": "479:10:25",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "id": 46847,
+                        "name": "starknetAddress",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 46834,
+                        "src": "491:15:25",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 46844,
+                      "name": "AddressRegistration",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 46832,
+                      "src": "459:19:25",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_uint256_$returns$__$",
+                        "typeString": "function (address,uint256)"
+                      }
+                    },
+                    "id": 46848,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "nameLocations": [],
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "459:48:25",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 46849,
+                  "nodeType": "EmitStatement",
+                  "src": "454:53:25"
+                }
+              ]
+            },
+            "functionSelector": "f207564e",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "register",
+            "nameLocation": "236:8:25",
+            "parameters": {
+              "id": 46835,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 46834,
+                  "mutability": "mutable",
+                  "name": "starknetAddress",
+                  "nameLocation": "253:15:25",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 46851,
+                  "src": "245:23:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 46833,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "245:7:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "244:25:25"
+            },
+            "returnParameters": {
+              "id": 46836,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "287:0:25"
+            },
+            "scope": 46875,
+            "stateMutability": "payable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "id": 46862,
+            "nodeType": "FunctionDefinition",
+            "src": "520:115:25",
+            "nodes": [],
+            "body": {
+              "id": 46861,
+              "nodeType": "Block",
+              "src": "584:51:25",
+              "nodes": [],
+              "statements": [
+                {
+                  "expression": {
+                    "baseExpression": {
+                      "id": 46856,
+                      "name": "addressRegistry",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 46826,
+                      "src": "601:15:25",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                        "typeString": "mapping(address => uint256)"
+                      }
+                    },
+                    "id": 46859,
+                    "indexExpression": {
+                      "expression": {
+                        "id": 46857,
+                        "name": "msg",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": -15,
+                        "src": "617:3:25",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_magic_message",
+                          "typeString": "msg"
+                        }
+                      },
+                      "id": 46858,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberLocation": "621:6:25",
+                      "memberName": "sender",
+                      "nodeType": "MemberAccess",
+                      "src": "617:10:25",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "601:27:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 46855,
+                  "id": 46860,
+                  "nodeType": "Return",
+                  "src": "594:34:25"
+                }
+              ]
+            },
+            "functionSelector": "cef30c21",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getMyAddressRegistry",
+            "nameLocation": "529:20:25",
+            "parameters": {
+              "id": 46852,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "549:2:25"
+            },
+            "returnParameters": {
+              "id": 46855,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 46854,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 46862,
+                  "src": "575:7:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 46853,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "575:7:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "574:9:25"
+            },
+            "scope": 46875,
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "id": 46874,
+            "nodeType": "FunctionDefinition",
+            "src": "641:153:25",
+            "nodes": [],
+            "body": {
+              "id": 46873,
+              "nodeType": "Block",
+              "src": "744:50:25",
+              "nodes": [],
+              "statements": [
+                {
+                  "expression": {
+                    "baseExpression": {
+                      "id": 46869,
+                      "name": "addressRegistry",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 46826,
+                      "src": "761:15:25",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                        "typeString": "mapping(address => uint256)"
+                      }
+                    },
+                    "id": 46871,
+                    "indexExpression": {
+                      "id": 46870,
+                      "name": "l1Address",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 46864,
+                      "src": "777:9:25",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "761:26:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 46868,
+                  "id": 46872,
+                  "nodeType": "Return",
+                  "src": "754:33:25"
+                }
+              ]
+            },
+            "functionSelector": "4174b9de",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getRegisteredStarknetAddress",
+            "nameLocation": "650:28:25",
+            "parameters": {
+              "id": 46865,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 46864,
+                  "mutability": "mutable",
+                  "name": "l1Address",
+                  "nameLocation": "696:9:25",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 46874,
+                  "src": "688:17:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 46863,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "688:7:25",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "678:33:25"
+            },
+            "returnParameters": {
+              "id": 46868,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 46867,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 46874,
+                  "src": "735:7:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 46866,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "735:7:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "734:9:25"
+            },
+            "scope": 46875,
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "ProofDropCore",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [46875],
+        "name": "ProofDropCore",
+        "nameLocation": "74:13:25",
+        "scope": 46876,
+        "usedErrors": [],
+        "usedEvents": [46832]
+      }
+    ],
+    "license": "UNLICENSED"
+  },
+  "id": 25
+}

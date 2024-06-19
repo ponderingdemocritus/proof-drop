@@ -8,15 +8,35 @@ import { StarknetAccount, StarknetConnectors } from "./Accounts/Starknet";
 import { Button } from "@/components/ui/button";
 
 import { useUser } from "@/hooks/useUser";
-import { useAccount } from "wagmi";
+import { useAccount, useReadContract, useWriteContract } from "wagmi";
 import { client } from "@/App";
+
+import abi from "@/abi/ProofDropCore.json";
+import { useAccount as useStaknetAccount } from "@starknet-react/core";
+import { sepolia } from "wagmi/chains";
+import { useMemo } from "react";
+
+import { num, shortString } from "starknet";
+
+const dropCoreAddress = import.meta.env.VITE_PROOF_DROP_CORE;
 
 export const Account = () => {
   const { user, loading, error } = useUser();
 
   const { address } = useAccount();
 
-  console.log(user);
+  const { address: StarknetAddress } = useStaknetAccount();
+
+  const { data: hash, writeContract } = useWriteContract();
+
+  const { data } = useReadContract({
+    abi: abi.abi,
+    functionName: "getRegisteredStarknetAddress",
+    address: dropCoreAddress,
+    args: [address],
+    chainId: sepolia.id,
+  });
+
   return (
     <div className="flex flex-col gap-4">
       <Card>
@@ -38,7 +58,7 @@ export const Account = () => {
       <Card>
         <CardHeader>Proof Drop Account</CardHeader>
 
-        <CardContent>
+        <CardContent className="flex gap-4">
           {!loading ? (
             !user ? (
               <Button
@@ -53,10 +73,30 @@ export const Account = () => {
                 Create Account
               </Button>
             ) : (
-              "Logged in"
+              <div> Logged in</div>
             )
           ) : (
-            "loading"
+            <div>loading</div>
+          )}
+
+          {!data ? (
+            <Button
+              onClick={() => {
+                writeContract({
+                  abi: abi.abi,
+                  address: dropCoreAddress,
+                  functionName: "register",
+                  args: [BigInt(StarknetAddress || "0")],
+                });
+              }}
+            >
+              Link networks
+            </Button>
+          ) : (
+            <div>
+              Proof Drop Mainnet Account:{" "}
+              {shortString.splitLongString(num.toHexString(data.toString()))}
+            </div>
           )}
         </CardContent>
       </Card>

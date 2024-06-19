@@ -12,6 +12,8 @@ export const config = createConfig({
   ],
   transports: {
     [mainnet.id]: http(),
-    [sepolia.id]: http(),
+    [sepolia.id]: http(
+      "https://eth-sepolia.blastapi.io/de586456-fa13-4575-9e6c-b73f9a88bc97"
+    ),
   },
 });
