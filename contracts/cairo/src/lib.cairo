@@ -24,16 +24,21 @@ mod ProofClaimContract {
     use starknet::ContractAddress;
     use super::{IEvmFactsRegistryDispatcherTrait, IEvmFactsRegistryDispatcher};
 
-    const AIRDROP_ELIGIBILITY_THRESHOLD: u256 = 1;
+    use openzeppelin::token::erc20::interface::{IERC20, IERC20Dispatcher, IERC20DispatcherTrait};
+
+
+    const AIRDROP_AMOUNT: u256 = 420000000000000000000;
 
     #[storage]
     struct Storage {
-        herodotus_facts_registry: ContractAddress
+        herodotus_facts_registry: ContractAddress,
+        claimed: LegacyMap::<u256, bool>,
+        lords: ContractAddress
     }
 
 
     #[constructor]
-    fn constructor(ref self: ContractState) {
+    fn constructor(ref self: ContractState, lordsContract: ContractAddress) {
         self
             .herodotus_facts_registry
             .write(
@@ -41,6 +46,8 @@ mod ProofClaimContract {
                     .try_into()
                     .unwrap()
             );
+
+        self.lords.write(lordsContract);
     }
 
     #[abi(embed_v0)]
@@ -54,16 +61,8 @@ mod ProofClaimContract {
         ) {
             let caller = starknet::get_caller_address();
 
-            // 1. Check the L1 NFT ownership
-            let ownership_amount: u256 = IEvmFactsRegistryDispatcher {
-                contract_address: self.herodotus_facts_registry.read()
-            }
-                .get_slot_value(account, block, ownership_slot)
-                .unwrap();
-
-            assert(ownership_amount >= AIRDROP_ELIGIBILITY_THRESHOLD, 'You dont own the NFT!');
-
-            // 2. Check the address registry mapping on ProofDropCore
+            // 1. get mapped address and check
+            // TODO: this should be wrapped into a Cairo Component
             let claimer = IEvmFactsRegistryDispatcher {
                 contract_address: self.herodotus_facts_registry.read()
             }
@@ -71,7 +70,23 @@ mod ProofClaimContract {
                 .unwrap();
             let caller_felt: felt252 = caller.into();
             assert(caller_felt.into() == claimer, 'You are not the owner!');
-        // TODO: do some more stuff
+
+            // 2. check ownership
+            let ownership: u256 = IEvmFactsRegistryDispatcher {
+                contract_address: self.herodotus_facts_registry.read()
+            }
+                .get_slot_value(account, block, ownership_slot)
+                .unwrap();
+
+            assert(ownership == claimer, 'You dont own the NFT!');
+            // TODO: do some more stuff
+
+            // 3. mark as claimed
+            self.claimed.write(claimer_slot, true);
+
+            // send erc20
+            IERC20Dispatcher { contract_address: self.lords.read() }
+                .transfer(caller, AIRDROP_AMOUNT);
         }
     }
 }
