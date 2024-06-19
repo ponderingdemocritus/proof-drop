@@ -72,6 +72,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      ethers:
+        specifier: ^6.13.0
+        version: 6.13.0
       get-starknet-core:
         specifier: ^3.3.0
         version: 3.3.0(starknet@5.24.3)
@@ -2763,7 +2766,7 @@ packages:
     dependencies:
       '@ethereumjs/tx': 4.2.0
       '@metamask/superstruct': 3.0.0
-      '@noble/hashes': 1.3.2
+      '@noble/hashes': 1.4.0
       '@scure/base': 1.1.7
       '@types/debug': 4.1.12
       debug: 4.3.5

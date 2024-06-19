@@ -2,9 +2,18 @@ import { client } from "@/App";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
-
+import {
+  useContract,
+  useContractWrite,
+  useNetwork,
+} from "@starknet-react/core";
 import { useParams } from "react-router-dom";
 import { useAccount } from "wagmi";
+import { useAccount as useStarknetAccount } from "@starknet-react/core";
+import { solidityPackedKeccak256 } from "ethers";
+
+import StarknetClaim from "../../../contracts/cairo/target/dev/cairo_ProofClaimContract.contract_class.json";
+import { useMemo } from "react";
 
 export const ProofDrop = () => {
   const { id } = useParams();
@@ -40,7 +49,7 @@ export const ProofDrop = () => {
 
                 <CardFooter>
                   {" "}
-                  <Button>Submit</Button>
+                  <ClaimButton tokenId={token.token?.tokenId!} />
                 </CardFooter>
               </Card>
             );
@@ -48,4 +57,40 @@ export const ProofDrop = () => {
       </div>
     </div>
   );
+};
+
+export const ClaimButton = ({ tokenId }: { tokenId: string }) => {
+  const { address } = useAccount();
+  const { address: StarknetAddress } = useStarknetAccount();
+  const { chain } = useNetwork();
+
+  const { contract } = useContract({
+    abi: StarknetClaim.abi,
+    address: chain.nativeCurrency.address,
+  });
+
+  const calls = useMemo(() => {
+    // This is the slot where the token id is stored
+    const tokenIdSlot = solidityPackedKeccak256(
+      ["string", "uint256"],
+      [tokenId, 2]
+    );
+
+    if (!address || !contract) return [];
+    return contract.populateTransaction["claim"]!(
+      BigInt(address),
+      5963231,
+      tokenIdSlot,
+      1
+    );
+  }, [contract, address]);
+
+  const {
+    writeAsync,
+    data: writeData,
+    isPending,
+  } = useContractWrite({
+    calls,
+  });
+  return <Button onClick={() => writeAsync()}>Transfer</Button>;
 };
