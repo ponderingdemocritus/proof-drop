@@ -13,7 +13,7 @@ const app = new Hono().get("/erc721/user", async (c) => {
   const response =
     data as paths["/users/{user}/tokens/v10"]["get"]["responses"]["200"]["schema"];
 
-  return c.json({ success: true, response });
+  return c.json({ success: true, tokens: response.tokens });
 });
 
 export default app;

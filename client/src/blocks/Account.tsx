@@ -21,7 +21,7 @@ import { num, shortString } from "starknet";
 const dropCoreAddress = import.meta.env.VITE_PROOF_DROP_CORE;
 
 export const Account = () => {
-  const { user, loading, error } = useUser();
+  const { user, loading, error, mutation } = useUser();
 
   const { address } = useAccount();
 
@@ -62,11 +62,9 @@ export const Account = () => {
           {!loading ? (
             !user ? (
               <Button
-                onClick={async () => {
-                  await client.users.create.$post({
-                    json: {
-                      address: address as any,
-                    },
+                onClick={() => {
+                  mutation.mutate({
+                    address: address as any,
                   });
                 }}
               >

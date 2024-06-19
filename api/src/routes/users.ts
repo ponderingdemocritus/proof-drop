@@ -6,6 +6,12 @@ import { UserQuerySchema } from "../types";
 import { claims, users } from "../db/schema";
 import { eq } from "drizzle-orm";
 
+interface ApiResponse<T> {
+  success: boolean;
+  message?: string;
+  data?: T;
+}
+
 const app = new Hono()
   .get("/", async (c) => {
     const address = c.req.query("address");
@@ -60,7 +66,10 @@ const app = new Hono()
     const data = c.req.valid("json");
 
     if (!data.address) {
-      return c.json({ success: false, message: "Address is required" }, 400);
+      return c.json<ApiResponse<null>>(
+        { success: false, message: "Address is required" },
+        400
+      );
     }
 
     const sql = neon(process.env.DATABASE_URL!);
@@ -74,7 +83,10 @@ const app = new Hono()
       .limit(1);
 
     if (existingUser.length > 0) {
-      return c.json({ success: false, message: "User already exists" }, 409);
+      return c.json<ApiResponse<null>>(
+        { success: false, message: "User already exists" },
+        409
+      );
     }
 
     // Insert new user if not exists
@@ -83,7 +95,10 @@ const app = new Hono()
       .values({ address: data.address })
       .returning({ created_at: users.createdAt });
 
-    return c.json({ success: true, user: result[0] });
+    return c.json<ApiResponse<(typeof result)[0]>>({
+      success: true,
+      data: result[0],
+    });
   });
 
 export default app;

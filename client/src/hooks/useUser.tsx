@@ -1,39 +1,47 @@
-import { useEffect, useState } from "react";
-
 import { useAccount } from "wagmi";
 import { client } from "@/App";
+import { useMutation, useQuery, QueryClient } from "@tanstack/react-query";
+import { hc, InferResponseType, InferRequestType } from "hono/client";
+
+const queryClient = new QueryClient();
 
 export const useUser = () => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
   const { address } = useAccount();
 
-  const fetchUser = async () => {
-    try {
-      const response = await client.users.$get({ query: { address } });
+  const query = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await client.users.$get({ query: { address } });
+      return await res.json();
+    },
+  });
 
-      const data = await response.json();
+  const $post = client.users.create.$post;
 
-      setUser(data.success == true ? data.user : null);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const mutation = useMutation<
+    InferResponseType<typeof $post>,
+    Error,
+    InferRequestType<typeof $post>["json"]
+  >({
+    mutationFn: async (user) => {
+      const response = await $post({
+        json: user,
+      });
 
-  useEffect(() => {
-    if (!address) {
-      return;
-    }
-    fetchUser();
-  }, []);
+      return await response.json();
+    },
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
+    onError: (error: any) => {
+      console.log(error);
+    },
+  });
 
   return {
-    user,
-    loading,
-    error,
+    user: query.data,
+    loading: query.isLoading,
+    error: query.error,
+    mutation,
   };
 };
