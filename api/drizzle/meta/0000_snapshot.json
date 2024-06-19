@@ -1,5 +1,5 @@
 {
-  "id": "e067bd06-dce0-48c5-a055-c8b7a34a4088",
+  "id": "c8320d94-d231-4b41-bfb5-ef7f527e6bcf",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -98,25 +98,31 @@
           "name": "name",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "contract_address": {
           "name": "contract_address",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "selector": {
           "name": "selector",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "block_number": {
           "name": "block_number",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
+        },
+        "number_tokens": {
+          "name": "number_tokens",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
         },
         "owner_id": {
           "name": "owner_id",
@@ -128,19 +134,19 @@
           "name": "slot",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "origin_chain_id": {
           "name": "origin_chain_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "destination_chain_id": {
           "name": "destination_chain_id",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "created_at": {
           "name": "created_at",

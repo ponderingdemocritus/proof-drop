@@ -8,6 +8,7 @@
   "dependencies": {
     "@hono/zod-validator": "^0.2.2",
     "@neondatabase/serverless": "^0.9.3",
+    "@reservoir0x/reservoir-sdk": "^2.2.12",
     "dotenv": "^16.4.5",
     "drizzle-kit": "^0.22.7",
     "drizzle-orm": "^0.31.2",

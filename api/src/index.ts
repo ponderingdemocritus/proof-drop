@@ -3,6 +3,9 @@ import { Hono } from "hono";
 import users from "./routes/users";
 import proofs from "./routes/proofs";
 import drops from "./routes/drops";
+import tokens from "./routes/tokens";
+
+import { createClient, reservoirChains } from "@reservoir0x/reservoir-sdk";
 
 export type Env = {
   DATABASE_URL: string;
@@ -10,11 +13,23 @@ export type Env = {
 
 const app = new Hono<{ Bindings: Env }>();
 
-app.route("/users", users);
+const routes = app
+  .route("/users", users)
+  .route("/proofs", proofs)
+  .route("/drops", drops)
+  .route("/tokens", tokens);
 
-app.route("/proofs", proofs);
+createClient({
+  apiKey: process.env.RESERVOIR_API_KEY!,
+  chains: [
+    {
+      ...reservoirChains.sepolia,
+      active: true,
+    },
+  ],
+});
 
-app.route("/drops", drops);
+export type AppType = typeof routes;
 
 export default {
   port: 7070,

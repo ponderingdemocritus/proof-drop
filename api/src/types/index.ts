@@ -40,17 +40,7 @@ export const CreateProofDropSchema = z.object({
   blockNumber: numberField,
   owner: stringField,
   slot: numberField,
+  numberTokens: numberField,
   originChainId: numberField,
   destinationChainId: stringField,
-});
-
-export const CreateERC721CollectionSchema = z.object({
-  name: stringField,
-  contractAddress: stringField,
-  blockNumber: numberField,
-  slot: numberField,
-  numberTokens: numberField,
-  owner: stringField,
-  chainId: numberField,
-  verified: z.boolean(),
 });

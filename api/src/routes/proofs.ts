@@ -11,115 +11,127 @@ export type Env = {
   DATABASE_URL: string;
 };
 
-const app = new Hono<{ Bindings: Env }>();
-
-app.post("/create", zValidator("json", ProveQuerySchema), async (c) => {
-  const data = c.req.valid("json");
-
-  const sql = neon(process.env.DATABASE_URL!);
-  const db = drizzle(sql);
-
-  // Check if the user already exists
-  const existingUser = await db
-    .select()
-    .from(users)
-    .where(eq(users.address, data.user))
-    .limit(1);
-
-  if (existingUser.length == 0) {
-    return c.json(
-      { success: false, message: "Create an account to submit proofs" },
-      409
-    );
+function chunkArray(array: any, chunkSize: any) {
+  const chunks = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+    chunks.push(array.slice(i, i + chunkSize));
   }
+  return chunks;
+}
 
-  // check drop exists
-  const existingProofDrop = await db
-    .select()
-    .from(proofDrops)
-    .where(eq(proofDrops.proof_drop_id, data.proofDropId))
-    .limit(1);
+const app = new Hono<{ Bindings: Env }>()
+  .post("/create", zValidator("json", ProveQuerySchema), async (c) => {
+    const data = c.req.valid("json");
 
-  if (existingProofDrop.length == 0) {
-    return c.json({ success: false, message: "Proof drop not found" }, 409);
-  }
+    const sql = neon(process.env.DATABASE_URL!);
+    const db = drizzle(sql);
 
-  const proofDrop = existingProofDrop[0];
+    // Check if the user already exists
+    const existingUser = await db
+      .select()
+      .from(users)
+      .where(eq(users.address, data.user))
+      .limit(1);
 
-  // generate the slots
-  const tokenIdSlot = solidityPackedKeccak256(
-    ["string", "uint256"],
-    [data.herodotusQuery.tokenId, proofDrop.slot]
-  );
+    if (existingUser.length == 0) {
+      return c.json(
+        { success: false, message: "Create an account to submit proofs" },
+        409
+      );
+    }
 
-  const addressSlot = "0x" + (BigInt(tokenIdSlot) + BigInt(1)).toString(16);
+    // check drop exists
+    const existingProofDrop = await db
+      .select()
+      .from(proofDrops)
+      .where(eq(proofDrops.proofDropId, data.proofDropId))
+      .limit(1);
 
-  const herodotusQuery = {
-    destinationChainId: proofDrop.destination_chain_id,
-    fee: "0", // todo: currently free
-    data: {
-      [`${proofDrop.origin_chain_id}`]: {
-        [`block:${proofDrop.block_number}`]: {
-          accounts: {
-            [`${proofDrop.contract_address}`]: {
-              slots: [tokenIdSlot, addressSlot],
+    if (existingProofDrop.length == 0) {
+      return c.json({ success: false, message: "Proof drop not found" }, 409);
+    }
+
+    const proofDrop = existingProofDrop[0];
+
+    const slots = [];
+    for (let i = 0; i <= proofDrop.numberTokens; i++) {
+      const tokenIdSlot = solidityPackedKeccak256(
+        ["string", "uint256"],
+        [i.toString(), proofDrop.slot]
+      );
+      slots.push(tokenIdSlot);
+    }
+
+    const slotBatches = chunkArray(slots, 50);
+
+    for (const batch of slotBatches) {
+      const herodotusQuery = {
+        destinationChainId: proofDrop.destinationChainId,
+        fee: "0", // todo: currently free
+        data: {
+          [`${proofDrop.originChainId}`]: {
+            [`block:${proofDrop.blockNumber}`]: {
+              accounts: {
+                [`${proofDrop.contractAddress}`]: {
+                  slots: batch,
+                },
+              },
             },
           },
         },
-      },
-    },
-  };
+      };
 
-  const request = new Request(
-    `https://api.herodotus.cloud/submit-batch-query?apiKey=${process.env.HERODOTUS_API_KEY}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(herodotusQuery),
+      const request = new Request(
+        `https://api.herodotus.cloud/submit-batch-query?apiKey=${process.env.HERODOTUS_API_KEY}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(herodotusQuery),
+        }
+      );
+
+      const response = await fetch(request);
+      const { internalId: herodotusQueryId } = await response.json();
+
+      console.log(herodotusQueryId);
+
+      const result = await db
+        .insert(claims)
+        .values({
+          requestedJobId: herodotusQueryId,
+          userId: existingUser[0].id,
+          tokenId: data.herodotusQuery.tokenId,
+          proofDropId: proofDrop.proofDropId,
+          status: "submitted",
+        })
+        .returning({ created_at: claims.createdAt });
     }
-  );
 
-  const response = await fetch(request);
+    return c.json({
+      success: true,
+      message: `Query submitted with id`,
+      claim: "complete",
+    });
+  })
+  .get("/status", async (c) => {
+    const queryId = c.req.query("queryId");
 
-  const { internalId: herodotusQueryId } = await response.json();
+    const request = new Request(
+      `https://api.herodotus.cloud/batch-query-status?batchQueryId=${queryId}&apiKey=${process.env.HERODOTUS_API_KEY}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-  const result = await db
-    .insert(claims)
-    .values({
-      requested_job_id: herodotusQueryId,
-      user_id: existingUser[0].id,
-      token_id: data.herodotusQuery.tokenId,
-      proof_drop_id: proofDrop.proof_drop_id,
-      status: "submitted",
-    })
-    .returning({ created_at: claims.created_at });
+    const response = await fetch(request);
+    const { queryStatus } = await response.json();
 
-  return c.json({
-    success: true,
-    message: `Query submitted with id ${herodotusQueryId}`,
-    claim: result[0],
+    return c.json({ status: queryStatus });
   });
-});
-
-app.get("/status", async (c) => {
-  const queryId = c.req.query("queryId");
-
-  const request = new Request(
-    `https://api.herodotus.cloud/batch-query-status?batchQueryId=${queryId}&apiKey=${process.env.HERODOTUS_API_KEY}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  const response = await fetch(request);
-  const { queryStatus } = await response.json();
-
-  return c.json({ status: queryStatus });
-});
 
 export default app;

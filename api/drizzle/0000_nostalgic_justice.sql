@@ -10,14 +10,15 @@ CREATE TABLE IF NOT EXISTS "claims" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "proof_drops" (
 	"proof_drop_id" serial PRIMARY KEY NOT NULL,
-	"name" text,
-	"contract_address" text,
-	"selector" text,
-	"block_number" integer,
+	"name" text NOT NULL,
+	"contract_address" text NOT NULL,
+	"selector" text NOT NULL,
+	"block_number" integer NOT NULL,
+	"number_tokens" integer NOT NULL,
 	"owner_id" integer,
-	"slot" integer,
-	"origin_chain_id" integer,
-	"destination_chain_id" text,
+	"slot" integer NOT NULL,
+	"origin_chain_id" integer NOT NULL,
+	"destination_chain_id" text NOT NULL,
 	"created_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
